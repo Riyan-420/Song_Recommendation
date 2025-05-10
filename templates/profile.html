@@ -1,0 +1,490 @@
+{% extends "base.html" %}
+{% block title %}Your Profile{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Common Styles */
+    :root {
+        --primary-color: #A259FF;
+        --accent-color: #69EAFF;
+    }
+    
+    .profile-container {
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 0 20px;
+    }
+    
+    .profile-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 40px;
+        padding: 30px;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+    
+    .profile-image {
+        width: 150px;
+        height: 150px;
+        margin-right: 30px;
+        overflow: hidden;
+        border-radius: 50%;
+        border: 3px solid var(--primary-color);
+        box-shadow: 0 5px 15px rgba(162, 89, 255, 0.3);
+    }
+    
+    .profile-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .profile-info {
+        flex: 1;
+    }
+    
+    .profile-info h1 {
+        margin: 0 0 10px 0;
+        font-size: 2.5rem;
+        background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    .profile-info p {
+        color: #777;
+        margin-bottom: 20px;
+    }
+    
+    .profile-content {
+        margin-bottom: 40px;
+    }
+    
+    .profile-content .card {
+        padding: 30px;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        border: none;
+    }
+    
+    .profile-content h2 {
+        margin-top: 0;
+        margin-bottom: 30px;
+        font-size: 1.8rem;
+        text-align: center;
+        color: var(--primary-color);
+    }
+    
+    .preferences-content {
+        padding: 20px;
+    }
+    
+    .preference-item {
+        margin-bottom: 25px;
+    }
+    
+    .preference-item h3 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+        color: #333;
+    }
+    
+    .trait-bars {
+        margin-bottom: 30px;
+    }
+    
+    .trait-bar {
+        margin-bottom: 15px;
+    }
+    
+    .trait-label {
+        display: inline-block;
+        width: 150px;
+        font-weight: 500;
+    }
+    
+    .trait-track {
+        display: inline-block;
+        width: calc(100% - 160px);
+        height: 10px;
+        background-color: #e0e0e0;
+        border-radius: 5px;
+        overflow: hidden;
+        vertical-align: middle;
+    }
+    
+    .trait-fill {
+        height: 100%;
+        background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+        border-radius: 5px;
+        transition: width 0.5s ease;
+    }
+    
+    .preference-scale {
+        display: flex;
+        align-items: center;
+    }
+    
+    .scale-dots {
+        display: flex;
+        margin: 0 10px;
+    }
+    
+    .scale-dot {
+        width: 20px;
+        height: 10px;
+        background-color: #e0e0e0;
+        margin: 0 5px;
+        border-radius: 5px;
+    }
+    
+    .scale-dot.active {
+        background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+    }
+    
+    .no-preferences {
+        text-align: center;
+        padding: 40px 20px;
+    }
+    
+    .no-preferences p {
+        margin-bottom: 20px;
+        color: #777;
+    }
+    
+    .btn {
+        display: inline-block;
+        padding: 10px 25px;
+        background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+        color: white;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s;
+        text-align: center;
+    }
+    
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(162, 89, 255, 0.3);
+        color: white;
+    }
+    
+    .btn-secondary {
+        background: #f5f5f5;
+        color: #333;
+    }
+    
+    /* Form Styles */
+    .form-container {
+        padding: 30px;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+    
+    .form-container h2 {
+        margin-top: 0;
+        margin-bottom: 30px;
+        font-size: 1.8rem;
+        text-align: center;
+        background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    .form-group {
+        margin-bottom: 25px;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+    
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s;
+    }
+    
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(162, 89, 255, 0.25);
+        outline: none;
+    }
+    
+    .invalid-feedback {
+        color: #ff4757;
+        font-size: 0.9rem;
+        margin-top: 5px;
+    }
+    
+    .is-invalid {
+        border-color: #ff4757;
+    }
+    
+    .current-profile-pic {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .current-profile-pic img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 10px;
+        border: 3px solid var(--primary-color);
+        box-shadow: 0 5px 15px rgba(162, 89, 255, 0.3);
+    }
+    
+    .current-profile-pic p {
+        color: #777;
+        font-size: 0.9rem;
+    }
+    
+    .form-control-file {
+        padding: 10px 0;
+    }
+    
+    .text-center {
+        text-align: center;
+    }
+    
+    .mt-4 {
+        margin-top: 1.5rem;
+    }
+    
+    .text-muted {
+        color: #777;
+        font-size: 0.9rem;
+    }
+    
+    .ms-2 {
+        margin-left: 0.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    {% if not edit_mode %}
+    <!-- View Profile Mode -->
+    <div class="profile-header">
+        <div class="profile-image">
+            <img src="{{ url_for('static', filename='uploads/' + current_user.profile_pic) }}" 
+                 alt="Profile Picture" onerror="this.src='{{ url_for('static', filename='img/default-avatar.jpg') }}'">
+        </div>
+        <div class="profile-info">
+            <h1>{{ current_user.username }}</h1>
+            <p>Member since: {{ current_user.date_joined.strftime('%B %d, %Y') }}</p>
+            <a href="{{ url_for('auth.profile') }}?edit=true" class="btn">Edit Profile</a>
+        </div>
+    </div>
+    
+    <div class="profile-content">
+        <div class="card">
+            <h2>Your Music Personality</h2>
+            
+            {% if preferences %}
+                <div class="preferences-content">
+                    <div class="preference-item">
+                        <h3>Favorite Genre</h3>
+                        <p>{{ preferences.favorite_genre|capitalize }}</p>
+                    </div>
+                    
+                    <div class="personality-traits">
+                        <h3>Personality Traits</h3>
+                        <div class="trait-bars">
+                            <div class="trait-bar">
+                                <span class="trait-label">Openness</span>
+                                <div class="trait-track">
+                                    <div class="trait-fill" style="width: {{ preferences.openness * 20 }}%"></div>
+                                </div>
+                            </div>
+                            <div class="trait-bar">
+                                <span class="trait-label">Conscientiousness</span>
+                                <div class="trait-track">
+                                    <div class="trait-fill" style="width: {{ preferences.conscientiousness * 20 }}%"></div>
+                                </div>
+                            </div>
+                            <div class="trait-bar">
+                                <span class="trait-label">Extraversion</span>
+                                <div class="trait-track">
+                                    <div class="trait-fill" style="width: {{ preferences.extraversion * 20 }}%"></div>
+                                </div>
+                            </div>
+                            <div class="trait-bar">
+                                <span class="trait-label">Agreeableness</span>
+                                <div class="trait-track">
+                                    <div class="trait-fill" style="width: {{ preferences.agreeableness * 20 }}%"></div>
+                                </div>
+                            </div>
+                            <div class="trait-bar">
+                                <span class="trait-label">Neuroticism</span>
+                                <div class="trait-track">
+                                    <div class="trait-fill" style="width: {{ preferences.neuroticism * 20 }}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="music-preferences">
+                        <h3>Music Preferences</h3>
+                        <div class="preference-item">
+                            <span>Energy Preference</span>
+                            <div class="preference-scale">
+                                <span>Low</span>
+                                <div class="scale-dots">
+                                    {% for i in range(1, 6) %}
+                                    <span class="scale-dot {% if preferences.energy_preference >= i %}active{% endif %}"></span>
+                                    {% endfor %}
+                                </div>
+                                <span>High</span>
+                            </div>
+                        </div>
+                        
+                        <div class="preference-item">
+                            <span>Mood Preference</span>
+                            <div class="preference-scale">
+                                <span>Sad</span>
+                                <div class="scale-dots">
+                                    {% for i in range(1, 6) %}
+                                    <span class="scale-dot {% if preferences.mood_preference >= i %}active{% endif %}"></span>
+                                    {% endfor %}
+                                </div>
+                                <span>Happy</span>
+                            </div>
+                        </div>
+                        
+                        <div class="preference-item">
+                            <span>Tempo Preference</span>
+                            <div class="preference-scale">
+                                <span>Slow</span>
+                                <div class="scale-dots">
+                                    {% for i in range(1, 6) %}
+                                    <span class="scale-dot {% if preferences.tempo_preference >= i %}active{% endif %}"></span>
+                                    {% endfor %}
+                                </div>
+                                <span>Fast</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <a href="{{ url_for('recommendations.questionnaire') }}" class="btn">Retake Questionnaire</a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="no-preferences">
+                    <p>You haven't completed your personality questionnaire yet.</p>
+                    <a href="{{ url_for('recommendations.questionnaire') }}" class="btn">Take the Questionnaire</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    {% else %}
+    <!-- Edit Profile Mode -->
+    <div class="form-container">
+        <h2>Edit Your Profile</h2>
+        
+        <form method="POST" action="{{ url_for('auth.profile') }}" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            
+            <div class="form-group">
+                {{ form.username.label(class="form-label") }}
+                {% if form.username.errors %}
+                    {{ form.username(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.username.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.username(class="form-control") }}
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.email.label(class="form-label") }}
+                {% if form.email.errors %}
+                    {{ form.email(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.email(class="form-control") }}
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <div class="current-profile-pic">
+                    <img src="{{ url_for('static', filename='uploads/' + current_user.profile_pic) }}" 
+                         alt="Current Profile Picture" onerror="this.src='{{ url_for('static', filename='img/default-avatar.jpg') }}'">
+                    <p>Current profile picture</p>
+                </div>
+                {{ form.profile_pic.label(class="form-label") }}
+                {{ form.profile_pic(class="form-control-file") }}
+                {% if form.profile_pic.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.profile_pic.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.new_password.label(class="form-label") }}
+                {% if form.new_password.errors %}
+                    {{ form.new_password(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.new_password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.new_password(class="form-control") }}
+                {% endif %}
+                <small class="text-muted">Leave blank if you don't want to change your password</small>
+            </div>
+            
+            <div class="form-group">
+                {{ form.confirm_password.label(class="form-label") }}
+                {% if form.confirm_password.errors %}
+                    {{ form.confirm_password(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.confirm_password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.confirm_password(class="form-control") }}
+                {% endif %}
+            </div>
+            
+            <div class="text-center mt-4">
+                {{ form.submit(class="btn") }}
+                <a href="{{ url_for('auth.profile') }}" class="btn btn-secondary ms-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

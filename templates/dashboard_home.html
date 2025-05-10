@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4">Welcome to MusicMind</h1>
+        <p class="lead">Discover music that matches your personality</p>
+        <hr class="my-4">
+        <p>Answer a few questions about yourself and let us recommend music tailored to your personality traits.</p>
+    </div>
+    
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-5">
+            <div class="feature-card text-center">
+                <div class="feature-icon">📝</div>
+                <h3 class="feature-title">Take the Questionnaire</h3>
+                <p>Complete our personality assessment to help us understand your music preferences.</p>
+                <a href="{{ url_for('recommendations.questionnaire') }}" class="btn btn-primary mt-3">Start Questionnaire</a>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="feature-card text-center">
+                <div class="feature-icon">🎵</div>
+                <h3 class="feature-title">View Recommendations</h3>
+                <p>See your personalized music recommendations based on your personality profile.</p>
+                <a href="{{ url_for('recommendations.dashboard') }}" class="btn btn-primary mt-3">See Recommendations</a>
+            </div>
+        </div>
+    </div>
+    
+    {% if recommendations and recommendations|length > 0 %}
+    <div class="mt-5">
+        <h2 class="text-center mb-4">Your Recent Recommendations</h2>
+        <div class="row">
+            {% for recommendation in recommendations[:3] %}
+                <div class="col-md-4 mb-4">
+                    <div class="recommendation-card">
+                        <img src="{{ url_for('static', filename='uploads/' + recommendation.album_art_url) }}" 
+                             class="recommendation-img" alt="{{ recommendation.song_title }}">
+                        <div class="recommendation-content">
+                            <h5 class="recommendation-title">{{ recommendation.song_title }}</h5>
+                            <p class="recommendation-artist">{{ recommendation.artist }}</p>
+                            <a href="{{ url_for('recommendations.dashboard') }}" class="btn btn-sm btn-outline-primary">View All</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,351 @@
+{% extends "base.html" %}
+{% block title %}Music Personality Questionnaire{% endblock %}
+
+{% block extra_css %}
+<style>
+    .questionnaire-section {
+        margin-bottom: 40px;
+    }
+    
+    .question {
+        background-color: var(--surface);
+        padding: 20px;
+        border-radius: var(--border-radius);
+        margin-bottom: 20px;
+    }
+    
+    .likert-scale {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+    
+    .likert-option {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .likert-option label {
+        margin-top: 5px;
+        text-align: center;
+    }
+    
+    .progress-bar {
+        height: 8px;
+        background-color: var(--surface);
+        border-radius: 4px;
+        margin-bottom: 30px;
+    }
+    
+    .progress {
+        height: 100%;
+        background-color: var(--primary);
+        border-radius: 4px;
+        transition: width 0.3s ease;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="questionnaire-container">
+    <h1>Discover Your Music Personality</h1>
+    <p class="subtitle">Answer these questions to help us understand your personality and music preferences.</p>
+    
+    <div class="progress-bar">
+        <div class="progress" id="progress-bar" style="width: 0%"></div>
+    </div>
+    
+    <form id="questionnaire-form" method="POST" action="{{ url_for('recommendations.save_preferences') }}">
+        <div class="questionnaire-section" id="personality-section">
+            <h2>Personality Traits</h2>
+            
+            <div class="question">
+                <p>I consider myself an outgoing person who enjoys social gatherings.</p>
+                <div class="likert-scale">
+                    <div class="likert-option">
+                        <input type="radio" name="extraversion" id="extraversion-1" value="1" required>
+                        <label for="extraversion-1">Strongly Disagree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="extraversion" id="extraversion-2" value="2">
+                        <label for="extraversion-2">Disagree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="extraversion" id="extraversion-3" value="3">
+                        <label for="extraversion-3">Neutral</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="extraversion" id="extraversion-4" value="4">
+                        <label for="extraversion-4">Agree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="extraversion" id="extraversion-5" value="5">
+                        <label for="extraversion-5">Strongly Agree</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>I am curious about many different things and enjoy exploring new ideas.</p>
+                <div class="likert-scale">
+                    <div class="likert-option">
+                        <input type="radio" name="openness" id="openness-1" value="1" required>
+                        <label for="openness-1">Strongly Disagree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="openness" id="openness-2" value="2">
+                        <label for="openness-2">Disagree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="openness" id="openness-3" value="3">
+                        <label for="openness-3">Neutral</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="openness" id="openness-4" value="4">
+                        <label for="openness-4">Agree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="openness" id="openness-5" value="5">
+                        <label for="openness-5">Strongly Agree</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>I tend to be organized and pay attention to details.</p>
+                <div class="likert-scale">
+                    <div class="likert-option">
+                        <input type="radio" name="conscientiousness" id="conscientiousness-1" value="1" required>
+                        <label for="conscientiousness-1">Strongly Disagree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="conscientiousness" id="conscientiousness-2" value="2">
+                        <label for="conscientiousness-2">Disagree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="conscientiousness" id="conscientiousness-3" value="3">
+                        <label for="conscientiousness-3">Neutral</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="conscientiousness" id="conscientiousness-4" value="4">
+                        <label for="conscientiousness-4">Agree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="conscientiousness" id="conscientiousness-5" value="5">
+                        <label for="conscientiousness-5">Strongly Agree</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>I am generally trusting and sympathetic towards others.</p>
+                <div class="likert-scale">
+                    <div class="likert-option">
+                        <input type="radio" name="agreeableness" id="agreeableness-1" value="1" required>
+                        <label for="agreeableness-1">Strongly Disagree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="agreeableness" id="agreeableness-2" value="2">
+                        <label for="agreeableness-2">Disagree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="agreeableness" id="agreeableness-3" value="3">
+                        <label for="agreeableness-3">Neutral</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="agreeableness" id="agreeableness-4" value="4">
+                        <label for="agreeableness-4">Agree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="agreeableness" id="agreeableness-5" value="5">
+                        <label for="agreeableness-5">Strongly Agree</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>I often worry and get nervous about things.</p>
+                <div class="likert-scale">
+                    <div class="likert-option">
+                        <input type="radio" name="neuroticism" id="neuroticism-1" value="1" required>
+                        <label for="neuroticism-1">Strongly Disagree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="neuroticism" id="neuroticism-2" value="2">
+                        <label for="neuroticism-2">Disagree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="neuroticism" id="neuroticism-3" value="3">
+                        <label for="neuroticism-3">Neutral</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="neuroticism" id="neuroticism-4" value="4">
+                        <label for="neuroticism-4">Agree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="neuroticism" id="neuroticism-5" value="5">
+                        <label for="neuroticism-5">Strongly Agree</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="questionnaire-section" id="music-section">
+            <h2>Music Preferences</h2>
+            
+            <div class="question">
+                <p>What genre of music do you listen to most frequently?</p>
+                <select name="favorite_genre" class="form-control" required>
+                    <option value="">Select a genre</option>
+                    <option value="pop">Pop</option>
+                    <option value="rock">Rock</option>
+                    <option value="hip_hop">Hip Hop</option>
+                    <option value="electronic">Electronic</option>
+                    <option value="classical">Classical</option>
+                    <option value="jazz">Jazz</option>
+                    <option value="country">Country</option>
+                    <option value="r_and_b">R&B</option>
+                    <option value="indie">Indie</option>
+                    <option value="metal">Metal</option>
+                </select>
+            </div>
+            
+            <div class="question">
+                <p>I prefer music that is energetic and upbeat.</p>
+                <div class="likert-scale">
+                    <div class="likert-option">
+                        <input type="radio" name="energy_preference" id="energy-1" value="1" required>
+                        <label for="energy-1">Strongly Disagree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="energy_preference" id="energy-2" value="2">
+                        <label for="energy-2">Disagree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="energy_preference" id="energy-3" value="3">
+                        <label for="energy-3">Neutral</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="energy_preference" id="energy-4" value="4">
+                        <label for="energy-4">Agree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="energy_preference" id="energy-5" value="5">
+                        <label for="energy-5">Strongly Agree</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>I prefer music that evokes positive, happy emotions.</p>
+                <div class="likert-scale">
+                    <div class="likert-option">
+                        <input type="radio" name="mood_preference" id="mood-1" value="1" required>
+                        <label for="mood-1">Strongly Disagree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="mood_preference" id="mood-2" value="2">
+                        <label for="mood-2">Disagree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="mood_preference" id="mood-3" value="3">
+                        <label for="mood-3">Neutral</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="mood_preference" id="mood-4" value="4">
+                        <label for="mood-4">Agree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="mood_preference" id="mood-5" value="5">
+                        <label for="mood-5">Strongly Agree</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>The lyrics of a song are more important to me than the instrumental aspects.</p>
+                <div class="likert-scale">
+                    <div class="likert-option">
+                        <input type="radio" name="lyrics_importance" id="lyrics-1" value="1" required>
+                        <label for="lyrics-1">Strongly Disagree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="lyrics_importance" id="lyrics-2" value="2">
+                        <label for="lyrics-2">Disagree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="lyrics_importance" id="lyrics-3" value="3">
+                        <label for="lyrics-3">Neutral</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="lyrics_importance" id="lyrics-4" value="4">
+                        <label for="lyrics-4">Agree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="lyrics_importance" id="lyrics-5" value="5">
+                        <label for="lyrics-5">Strongly Agree</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>I am open to discovering music from different cultures and languages.</p>
+                <div class="likert-scale">
+                    <div class="likert-option">
+                        <input type="radio" name="cultural_openness" id="cultural-1" value="1" required>
+                        <label for="cultural-1">Strongly Disagree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="cultural_openness" id="cultural-2" value="2">
+                        <label for="cultural-2">Disagree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="cultural_openness" id="cultural-3" value="3">
+                        <label for="cultural-3">Neutral</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="cultural_openness" id="cultural-4" value="4">
+                        <label for="cultural-4">Agree</label>
+                    </div>
+                    <div class="likert-option">
+                        <input type="radio" name="cultural_openness" id="cultural-5" value="5">
+                        <label for="cultural-5">Strongly Agree</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-lg">Get My Recommendations</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Simple form progress tracking
+    const form = document.getElementById('questionnaire-form');
+    const inputs = form.querySelectorAll('input[required], select[required]');
+    const progressBar = document.getElementById('progress-bar');
+    
+    function updateProgress() {
+        let completed = 0;
+        inputs.forEach(input => {
+            if ((input.type === 'radio' && document.querySelector(`input[name="${input.name}"]:checked`)) || 
+                (input.type !== 'radio' && input.value)) {
+                completed++;
+            }
+        });
+        
+        const percentage = Math.round((completed / inputs.length) * 100);
+        progressBar.style.width = `${percentage}%`;
+    }
+    
+    inputs.forEach(input => {
+        input.addEventListener('change', updateProgress);
+    });
+    
+    // Initial progress update
+    updateProgress();
+</script>
+{% endblock %}

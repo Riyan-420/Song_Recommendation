@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Your Music Recommendations{% endblock %}
+
+{% block content %}
+<div class="recommendations-container">
+    <div class="recommendations-header">
+        <h1>Your Personalized Recommendations</h1>
+        <p>Based on your personality and music preferences, we think you'll enjoy these songs:</p>
+        
+        <form action="{{ url_for('recommendations.refresh_recommendations') }}" method="POST" class="refresh-form">
+            <button type="submit" class="btn btn-secondary">Get New Recommendations</button>
+        </form>
+    </div>
+    
+    <div class="recommendation-grid">
+        {% for rec in recommendations %}
+        <div class="card song-card" data-id="{{ rec.id }}">
+            <img src="{{ rec.album_art_url }}" alt="{{ rec.album }} by {{ rec.artist }}" class="song-card-img">
+            <div class="song-card-body">
+                <h3 class="song-title">{{ rec.song_title }}</h3>
+                <p class="song-artist">{{ rec.artist }}</p>
+                <p class="song-album">Album: {{ rec.album }} ({{ rec.year }})</p>
+                <p class="song-genre">Genre: {{ rec.genre|capitalize }}</p>
+                
+                <div class="rating-container">
+                    <p>Rate this recommendation:</p>
+                    <div class="star-rating">
+                        {% for i in range(1, 6) %}
+                        <span class="star {% if rec.user_rating and rec.user_rating >= i %}active{% endif %}" 
+                              data-value="{{ i }}" 
+                              data-rec-id="{{ rec.id }}">★</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/recommendations.js') }}"></script>
+{% endblock %}

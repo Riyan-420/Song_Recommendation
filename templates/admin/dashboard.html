@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>🎛️ Welcome to the Admin Control Room</h2>
+  <p>Manage your music empire with style!</p>
+
+  <ul style="list-style: none; padding-left: 0;">
+    <li><a href="{{ url_for('admin.add_song') }}">🎶 Drop the Beat (Add New Songs)</a></li>
+    <li><a href="{{ url_for('admin.manage_songs') }}">🎯 Sound Tracker (Manage Songs)</a></li>
+    <li><a href="{{ url_for('admin.manage_users') }}">👥 Spy on Fans (View Users)</a></li>
+    <li><a href="{{ url_for('admin.notifications') }}">📰 What’s New? (Notifications)</a></li>
+    <li><a href="{{ url_for('admin.graveyard') }}">🗑️ Graveyard (Recycle Bin)</a></li>
+  </ul>
+{% endblock %}
