@@ -1,14 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Minimal Flask App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <h1>Welcome to the Minimal Flask App</h1>
-    <form action="/button_click" method="post">
-        <button type="submit">Click Me!</button>
-    </form>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Discover Music That Matches Your Personality</h1>
+            <p class="hero-subtitle">Answer our personality questionnaire to help us find music that resonates with your unique traits.</p>
+            <div class="hero-buttons">
+                <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Sign Up</a>
+                <a href="{{ url_for('auth.login') }}" class="btn btn-outline-primary ms-3">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <h2 class="text-center mb-5">How It Works</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">📝</div>
+                <h3 class="feature-title">Take the Questionnaire</h3>
+                <p>Answer questions about your personality traits and music preferences.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3 class="feature-title">Our Algorithm Works</h3>
+                <p>We analyze your responses and match them with music that fits your personality.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">🎵</div>
+                <h3 class="feature-title">Discover New Music</h3>
+                <p>Explore personalized recommendations and expand your musical horizons.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

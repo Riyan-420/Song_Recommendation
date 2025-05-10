@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4 text-center">Your Music Recommendations</h1>
+    
+    {% if not recommendations %}
+        <div class="alert alert-info">
+            <p>You don't have any recommendations yet. Fill out the <a href="{{ url_for('recommendations.questionnaire') }}">personality questionnaire</a> to get personalized music recommendations!</p>
+        </div>
+    {% else %}
+        <div class="row">
+            {% for recommendation in recommendations %}
+                <div class="col-md-4 mb-4">
+                    <div class="recommendation-card">
+                        <img src="{{ url_for('static', filename='uploads/' + recommendation.album_art_url) }}"
+                             class="recommendation-img" alt="{{ recommendation.song_title }}">
+                        <div class="recommendation-content">
+                            <h5 class="recommendation-title">{{ recommendation.song_title }}</h5>
+                            <p class="recommendation-artist">{{ recommendation.artist }}</p>
+                            <p class="small text-muted">
+                                Album: {{ recommendation.album }}<br>
+                                Genre: {{ recommendation.genre }}
+                            </p>
+                            <p>{{ recommendation.description }}</p>
+                            
+                            {% if recommendation.user_rating %}
+                                <p class="mb-2">Your rating: 
+                                    <span class="text-warning">
+                                        {% for i in range(recommendation.user_rating) %}★{% endfor %}
+                                        {% for i in range(5 - recommendation.user_rating) %}☆{% endfor %}
+                                    </span>
+                                </p>
+                            {% else %}
+                                <form action="{{ url_for('recommendations.rate_recommendation', recommendation_id=recommendation.id) }}" method="POST" class="rating-form">
+                                    <div class="mb-2">Rate this recommendation:</div>
+                                    <div class="btn-group" role="group">
+                                        {% for i in range(1, 6) %}
+                                            <button type="submit" name="rating" value="{{ i }}" class="btn btn-outline-warning btn-sm">{{ i }}</button>
+                                        {% endfor %}
+                                    </div>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <div class="text-center mt-4">
+        <a href="{{ url_for('recommendations.questionnaire') }}" class="btn btn-primary">Retake Questionnaire</a>
+    </div>
+</div>
+{% endblock %}
