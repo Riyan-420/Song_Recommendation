@@ -1,6 +1,3 @@
-#See the admin credentials.
-#Whenever you want to log in as an admin, use these credentials.
-
 from extensions import db
 from models.user import User
 from werkzeug.security import generate_password_hash

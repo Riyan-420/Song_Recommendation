@@ -1,4 +1,4 @@
-# images are yet to be added. Replace the URLs with actual image URLs.
+# insert_songs.py
 
 from flask import current_app
 from app import create_app
