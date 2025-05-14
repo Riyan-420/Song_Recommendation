@@ -14,8 +14,10 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    # If already logged in, redirect to dashboard
+    # If already logged in, redirect to appropriate dashboard
     if current_user.is_authenticated:
+        if current_user.is_admin:
+            return redirect(url_for('admin.dashboard'))
         return redirect(url_for('recommendations.home'))
     
     form = LoginForm()
@@ -23,15 +25,15 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
+            flash('You have been logged in successfully!', 'success')
+            
+            # Redirect based on user type
+            if user.is_admin:
+                return redirect(url_for('admin.dashboard'))
+            
             next_page = request.args.get('next')
             if not next_page or not next_page.startswith('/'):
                 next_page = url_for('recommendations.home')
-            flash('You have been logged in successfully!', 'success')
-
-            # 👇 Admin redirect logic
-            if user.is_admin:
-                return redirect(url_for('admin.dashboard'))  # Replace 'admin.dashboard' with the actual endpoint name
-
             return redirect(next_page)
         else:
             flash('Invalid email or password', 'danger')
