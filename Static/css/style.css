@@ -56,15 +56,21 @@ body {
     font-size: 3rem;
     font-weight: 600;
     margin-bottom: 20px;
-    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    line-height: 1.2;
+    padding-bottom: 0.2em;
+    display: inline-block;
 }
 
 .hero-subtitle {
     font-size: 1.2rem;
     color: #555;
     margin-bottom: 30px;
+}
+
+.hero-emoji {
+    font-size: 2.5em;
+    margin-right: 8px;
+    filter: none; /* Ensures no gradient or color filter is applied */
 }
 
 /* Buttons */
@@ -193,4 +199,110 @@ footer {
     .hero-title {
         font-size: 2.5rem;
     }
+}
+
+.fire-gradient {
+    background: linear-gradient(90deg, #ffd600 0%, #ff9800 50%, #ff3d00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+/* Firebase Integration Dark Mode */
+.firebase-dark {
+    background: #181818 !important;
+    color: #fff !important;
+}
+.firebase-dark .container, .firebase-dark .feature-card {
+    background: #232323 !important;
+    color: #fff !important;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+}
+.firebase-dark .feature-card {
+    border: 1px solid #333;
+}
+.firebase-dark .hero-title, .firebase-dark .fire-gradient {
+    /* Remove block-level background gradient */
+    background: none !important;
+    color: inherit !important;
+    -webkit-background-clip: initial;
+    -webkit-text-fill-color: inherit;
+    background-clip: initial;
+}
+.firebase-dark .hero-subtitle {
+    color: #ffd600 !important;
+    background: none !important;
+}
+.firebase-dark .navbar, .firebase-dark .navbar .container {
+    background: #181818 !important;
+}
+.firebase-dark .navbar-brand {
+    background: linear-gradient(90deg, #ffd600 0%, #ff9800 50%, #ff3d00 100%) !important;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent !important;
+}
+.firebase-dark .btn-fire {
+    background: linear-gradient(90deg, #ffd600 0%, #ff9800 50%, #ff3d00 100%);
+    color: #181818;
+    border: none;
+    font-weight: bold;
+}
+.firebase-dark .btn-fire:hover {
+    background: linear-gradient(90deg, #ff3d00 0%, #ffd600 100%);
+    color: #fff;
+}
+.firebase-dark .list-group-item {
+    background: #232323;
+    color: #fff;
+    border-color: #333;
+}
+.firebase-dark .btn-outline-primary {
+    border-color: #ffd600;
+    color: #ffd600;
+}
+.firebase-dark .btn-outline-primary:hover {
+    background: #ffd600;
+    color: #181818;
+}
+.firebase-dark .btn-outline-danger {
+    border-color: #ff3d00;
+    color: #ff3d00;
+}
+.firebase-dark .btn-outline-danger:hover {
+    background: #ff3d00;
+    color: #fff;
+}
+
+.btn-outline-fire {
+    border: 2px solid #ff9800;
+    color: #ff9800;
+    background: transparent;
+    transition: all 0.3s;
+}
+.btn-outline-fire:hover {
+    background: linear-gradient(90deg, #ffd600 0%, #ff9800 50%, #ff3d00 100%);
+    color: #181818;
+    border: 2px solid #ff9800;
+}
+
+.logo-gradient {
+    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    display: inline;
+}
+.firebase-dark .logo-gradient {
+    background: linear-gradient(90deg, #ffd600 0%, #ff9800 50%, #ff3d00 100%) !important;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent !important;
 }

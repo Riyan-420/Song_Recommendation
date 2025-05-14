@@ -14,6 +14,7 @@ class User(db.Model, UserMixin):
     profile_pic = db.Column(db.String(255), default='default.jpg')
     date_joined = db.Column(db.DateTime, default=datetime.utcnow)
     is_admin = db.Column(db.Boolean, default=False)
+    deleted = db.Column(db.Boolean, default=False)
 
     
     # Relationships

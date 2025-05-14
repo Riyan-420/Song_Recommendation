@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .feature-card {
+        background: #232323;
+        border-radius: 18px;
+        box-shadow: 0 4px 24px 0 rgba(0,0,0,0.18);
+        padding: 2rem 2rem 1.5rem 2rem;
+        margin-bottom: 2rem;
+    }
+    .firebase-dark input.form-control, .firebase-dark select.form-select {
+        background: #181818;
+        color: #fff;
+        border: 1.5px solid #444;
+        border-radius: 8px;
+        min-height: 48px;
+    }
+    .firebase-dark input.form-control:focus, .firebase-dark select.form-select:focus {
+        background: #222;
+        color: #fff;
+        border-color: #ff9800;
+        box-shadow: 0 0 0 0.15rem rgba(255,152,0,.25);
+    }
+    .btn-fire {
+        background: linear-gradient(90deg, #ff9800, #ff3d00);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        min-height: 48px;
+        font-weight: 600;
+        transition: box-shadow 0.2s;
+        box-shadow: 0 2px 8px 0 rgba(255,61,0,0.10);
+    }
+    .btn-fire:hover, .btn-fire:focus {
+        background: linear-gradient(90deg, #ff3d00, #ff9800);
+        color: #fff;
+        box-shadow: 0 4px 16px 0 rgba(255,61,0,0.18);
+    }
+    .btn-outline-fire {
+        border: 2px solid #ff9800;
+        color: #ff9800;
+        background: transparent;
+        border-radius: 8px;
+        font-weight: 600;
+        min-width: 80px;
+    }
+    .btn-outline-fire:hover, .btn-outline-fire:focus {
+        background: linear-gradient(90deg, #ff9800, #ff3d00);
+        color: #fff;
+        border: 2px solid #ff9800;
+    }
+    @media (max-width: 767px) {
+        .feature-card { padding: 1rem; }
+        .firebase-dark input.form-control, .firebase-dark select.form-select, .btn-fire { min-height: 40px; font-size: 1rem; }
+    }
+</style>
+<div class="firebase-dark">
+<div class="container py-5">
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-8 text-center">
+            <h2 class="hero-title mb-2"><span class="fire-gradient">🔥 Firebase Integration</span></h2>
+            <p class="hero-subtitle"><span class="fire-gradient">Manage items in Google Firestore directly from MusicMind.</span></p>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6 mx-auto">
+            <div class="feature-card mb-4 text-center">
+                <form method="GET" action="{{ url_for('admin.firebase_integration') }}" class="mb-2">
+                    <div class="mb-2">
+                        <select name="collection" class="form-select text-center" onchange="this.form.submit()">
+                            <option value="" {% if not selected_collection %}selected{% endif %}>-- Select a collection --</option>
+                            {% for col in collections %}
+                                <option value="{{ col }}" {% if selected_collection == col %}selected{% endif %}>{{ col }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </form>
+                {% if not selected_collection %}
+                <form method="POST" action="{{ url_for('admin.firebase_integration') }}" class="mb-3">
+                    <div class="input-group">
+                        <input type="text" name="new_collection" class="form-control text-center" placeholder="Add new collection..." autocomplete="off">
+                        <button type="submit" class="btn btn-outline-fire">Add</button>
+                    </div>
+                </form>
+                {% else %}
+                <a href="{{ url_for('admin.firebase_integration') }}" class="btn btn-outline-fire mb-3">Back to collections</a>
+                {% endif %}
+                {% if selected_collection %}
+                <form method="POST" action="{{ url_for('admin.firebase_integration', collection=selected_collection) }}">
+                    <div class="row g-2 align-items-center justify-content-center">
+                        <div class="col-12 col-md-5 mb-2 mb-md-0">
+                            <input type="text" name="item_name" class="form-control text-center" placeholder="Item name" required>
+                        </div>
+                        <div class="col-12 col-md-5 mb-2 mb-md-0">
+                            <input type="text" name="item_description" class="form-control text-center" placeholder="Description (optional)">
+                        </div>
+                        <div class="col-12 col-md-2">
+                            <button type="submit" class="btn btn-fire w-100">Add Item</button>
+                        </div>
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+            <div class="feature-card text-center">
+                <h5 class="mb-3">
+                    {% if not selected_collection %}
+                        <span class="fire-gradient">Collections</span>
+                    {% else %}
+                        <span class="fire-gradient">Items in Firestore ({{ selected_collection }})</span>
+                    {% endif %}
+                </h5>
+                {% if not selected_collection %}
+                    <ul class="list-group">
+                        {% for col in collections %}
+                        <li class="list-group-item bg-dark text-white" style="border-radius: 8px; margin-bottom: 0.5rem; border: none;">
+                            {{ col }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% elif items %}
+                <ul class="list-group">
+                    {% for item in items %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-white" style="border-radius: 8px; margin-bottom: 0.5rem; border: none;">
+                        {% if edit_item and edit_item.id == item.id %}
+                        <form method="POST" action="{{ url_for('admin.firebase_integration', edit=item.id, collection=selected_collection) }}" class="d-flex w-100 align-items-center">
+                            <input type="text" name="new_name" value="{{ edit_item.name }}" class="form-control me-2" required>
+                            <input type="text" name="new_description" value="{{ edit_item.description }}" class="form-control me-2">
+                            <button type="submit" class="btn btn-fire btn-sm me-2">Save</button>
+                            <a href="{{ url_for('admin.firebase_integration', collection=selected_collection) }}" class="btn btn-secondary btn-sm">Cancel</a>
+                        </form>
+                        {% else %}
+                        <span class="text-start"><strong>{{ item['name'] }}</strong>{% if item['description'] %} — {{ item['description'] }}{% endif %}</span>
+                        <span>
+                            <a href="{{ url_for('admin.firebase_integration', edit=item['id'], collection=selected_collection) }}" class="btn btn-outline-fire btn-sm">Edit</a>
+                            <a href="{{ url_for('admin.firebase_integration', delete=item['id'], collection=selected_collection) }}" class="btn btn-outline-danger btn-sm ms-2">Delete</a>
+                        </span>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-center mb-0">No items found in Firestore.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %} 

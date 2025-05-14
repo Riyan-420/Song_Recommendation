@@ -11,28 +11,42 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a href="{{ url_for('index') }}" class="navbar-brand">MusicMind</a>
+            <a href="{% if current_user.is_authenticated and current_user.is_admin %}{{ url_for('admin.dashboard') }}{% else %}{{ url_for('index') }}{% endif %}" class="navbar-brand">
+                <span class="logo-gradient{% if request.endpoint == 'admin.firebase_integration' %} fire-gradient{% endif %}">MusicMind</span>
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     {% if current_user.is_authenticated %}
-                        <li class="nav-item">
-                            <a href="{{ url_for('recommendations.home') }}" class="nav-link">Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url_for('recommendations.questionnaire') }}" class="nav-link">Questionnaire</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url_for('recommendations.dashboard') }}" class="nav-link">Recommendations</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url_for('auth.profile') }}" class="nav-link">Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url_for('auth.logout') }}" class="nav-link">Logout</a>
-                        </li>
+                        {% if current_user.is_admin %}
+                            <li class="nav-item">
+                                <a href="{{ url_for('admin.dashboard') }}" class="nav-link">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url_for('auth.profile') }}" class="nav-link">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url_for('auth.logout') }}" class="nav-link">Logout</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a href="{{ url_for('recommendations.home') }}" class="nav-link">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url_for('recommendations.questionnaire') }}" class="nav-link">Questionnaire</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url_for('recommendations.dashboard') }}" class="nav-link">Recommendations</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url_for('auth.profile') }}" class="nav-link">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url_for('auth.logout') }}" class="nav-link">Logout</a>
+                            </li>
+                        {% endif %}
                     {% endif %}
                 </ul>
             </div>

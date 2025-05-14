@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-8 text-center">
+            <h2 class="hero-title mb-2">🔥 Firebase Demo</h2>
+            <p class="hero-subtitle">This page will demonstrate add/read/update/delete with Google Firestore, styled to match MusicMind.</p>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="feature-card">
+                <h4>Setup Instructions</h4>
+                <ol class="text-start">
+                    <li>Go to <a href="https://console.firebase.google.com/" target="_blank">Firebase Console</a> and create a project.</li>
+                    <li>Generate a service account key (JSON) and place it in your project root as <code>firebase_key.json</code>.</li>
+                    <li>Install the <code>firebase-admin</code> Python package:<br><code>pip install firebase-admin</code></li>
+                    <li>Once setup is complete, this page will allow you to add, read, update, and delete Firestore documents.</li>
+                </ol>
+                <div class="alert alert-info mt-4">The interactive demo will appear here soon!</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

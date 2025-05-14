@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template, url_for, redirect
 from flask_login import current_user
 from config import Config
@@ -32,7 +33,6 @@ def create_app():
         with open(os.path.join(img_dir, 'default-avatar-missing.txt'), 'w') as f:
             f.write("Please add a default-avatar.jpg image in this directory for user profile defaults")
     
-    
     db.init_app(app)
     login_manager.init_app(app)
     migrate.init_app(app, db)
@@ -52,10 +52,8 @@ def create_app():
     # Add root route for home page
     @app.route('/')
     def index():
-        # If user is already logged in, redirect to appropriate dashboard
+        # If user is already logged in, redirect to dashboard
         if current_user.is_authenticated:
-            if current_user.is_admin:
-                return redirect(url_for('admin.dashboard'))
             return redirect(url_for('recommendations.home'))
         # Otherwise show landing page
         return render_template('index.html', title='Home')

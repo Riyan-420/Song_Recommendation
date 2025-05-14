@@ -18,4 +18,5 @@ class Song(db.Model):
     mood   = db.Column(db.Integer)
     lyrics_importance = db.Column(db.Boolean)
     album_art_url = db.Column(db.String(200))
+    deleted = db.Column(db.Boolean, default=False)
     # etc.

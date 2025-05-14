@@ -1,5 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h2>🎶 Drop the Beat</h2>
-  <p>Manage your music empire with style!</p>
+<div class="container py-5">
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-8 text-center">
+            <h2 class="hero-title mb-2">{% if edit_mode %}✏️ Edit Song{% else %}➕ Drop the Beat{% endif %}</h2>
+            <p class="hero-subtitle">{% if edit_mode %}Update song details below.{% else %}Add new songs to your music empire!{% endif %}</p>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="feature-card">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="row g-3">
+                        <div class="col-md-6">{{ form.title.label(class="form-label") }}{{ form.title(class="form-control") }}</div>
+                        <div class="col-md-6">{{ form.artist.label(class="form-label") }}{{ form.artist(class="form-control") }}</div>
+                        <div class="col-md-6">{{ form.album.label(class="form-label") }}{{ form.album(class="form-control") }}</div>
+                        <div class="col-md-6">{{ form.genre.label(class="form-label") }}{{ form.genre(class="form-control") }}</div>
+                        <div class="col-md-6">{{ form.year.label(class="form-label") }}{{ form.year(class="form-control") }}</div>
+                        <div class="col-md-6">{{ form.album_art_url.label(class="form-label") }}{{ form.album_art_url(class="form-control") }}</div>
+                        <div class="col-md-4">{{ form.extraversion.label(class="form-label") }}{{ form.extraversion(class="form-control") }}</div>
+                        <div class="col-md-4">{{ form.openness.label(class="form-label") }}{{ form.openness(class="form-control") }}</div>
+                        <div class="col-md-4">{{ form.conscientiousness.label(class="form-label") }}{{ form.conscientiousness(class="form-control") }}</div>
+                        <div class="col-md-4">{{ form.agreeableness.label(class="form-label") }}{{ form.agreeableness(class="form-control") }}</div>
+                        <div class="col-md-4">{{ form.neuroticism.label(class="form-label") }}{{ form.neuroticism(class="form-control") }}</div>
+                        <div class="col-md-4">{{ form.energy.label(class="form-label") }}{{ form.energy(class="form-control") }}</div>
+                        <div class="col-md-4">{{ form.mood.label(class="form-label") }}{{ form.mood(class="form-control") }}</div>
+                        <div class="col-md-4">{{ form.lyrics_importance.label(class="form-label") }}<div class="form-check">{{ form.lyrics_importance(class="form-check-input") }}</div></div>
+                    </div>
+                    <div class="mt-4 text-center">{{ form.submit(class="btn btn-primary px-5", value=("Update Song" if edit_mode else "Save Song")) }}</div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

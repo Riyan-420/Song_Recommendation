@@ -1,5 +1,46 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h2>🎯 Sound Tracker</h2>
-  <p>Manage your music empire with style!</p>
+<div class="container py-5">
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-8 text-center">
+            <h2 class="hero-title mb-2">🎵 Sound Tracker</h2>
+            <p class="hero-subtitle">Manage your songs with precision and flair!</p>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="feature-card">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Artist</th>
+                            <th>Album</th>
+                            <th>Genre</th>
+                            <th>Year</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for song in songs %}
+                        <tr>
+                            <td>{{ song.title }}</td>
+                            <td>{{ song.artist }}</td>
+                            <td>{{ song.album }}</td>
+                            <td>{{ song.genre }}</td>
+                            <td>{{ song.year }}</td>
+                            <td>
+                                <a href="{{ url_for('admin.edit_song', song_id=song.id) }}" class="btn btn-sm btn-outline-primary">Edit</a>
+                                <a href="{{ url_for('admin.delete_song', song_id=song.id) }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this song?');">Delete</a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="6" class="text-center">No songs found.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -1,60 +1,60 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container my-5">
-    <div class="text-center mb-5">
-        <h1 class="display-4">🎛️ Admin Control Room</h1>
-        <p class="lead">Manage your music empire with style!</p>
+<div class="container py-5">
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-8 text-center">
+            <h2 class="hero-title mb-2 text-center">
+                <span class="hero-emoji align-middle" style="font-size: 1em; vertical-align: middle;">🛠️</span>
+                <span class="align-middle">Welcome to the Admin Control Room</span>
+            </h2>
+            <p class="hero-subtitle">Manage your music empire with style!</p>
+        </div>
     </div>
-
-    <div class="row">
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <div class="card-body text-center">
-                    <h3 class="card-title">🎶 Drop the Beat</h3>
-                    <p class="card-text">Add new songs to the database</p>
-                    <a href="{{ url_for('admin.add_song') }}" class="btn btn-primary">Add Songs</a>
+    <div class="row g-4 justify-content-center">
+        <div class="col-md-4">
+            <a href="{{ url_for('admin.add_song') }}" class="text-decoration-none">
+                <div class="feature-card h-100">
+                    <div class="feature-icon">➕</div>
+                    <div class="feature-title">Drop the Beat</div>
+                    <div>Add New Songs</div>
                 </div>
-            </div>
+            </a>
         </div>
-        
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <div class="card-body text-center">
-                    <h3 class="card-title">🎯 Sound Tracker</h3>
-                    <p class="card-text">Manage existing songs</p>
-                    <a href="{{ url_for('admin.manage_songs') }}" class="btn btn-primary">Manage Songs</a>
+        <div class="col-md-4">
+            <a href="{{ url_for('admin.manage_songs') }}" class="text-decoration-none">
+                <div class="feature-card h-100">
+                    <div class="feature-icon">🎵</div>
+                    <div class="feature-title">Sound Tracker</div>
+                    <div>Manage Songs</div>
                 </div>
-            </div>
+            </a>
         </div>
-        
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <div class="card-body text-center">
-                    <h3 class="card-title">👥 Spy on Fans</h3>
-                    <p class="card-text">View and manage user accounts</p>
-                    <a href="{{ url_for('admin.manage_users') }}" class="btn btn-primary">Manage Users</a>
+        <div class="col-md-4">
+            <a href="{{ url_for('admin.manage_users') }}" class="text-decoration-none">
+                <div class="feature-card h-100">
+                    <div class="feature-icon">👤</div>
+                    <div class="feature-title">Spy on Fans</div>
+                    <div>View Users</div>
                 </div>
-            </div>
+            </a>
         </div>
-        
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <div class="card-body text-center">
-                    <h3 class="card-title">📰 What's New?</h3>
-                    <p class="card-text">Send notifications to users</p>
-                    <a href="{{ url_for('admin.notifications') }}" class="btn btn-primary">Notifications</a>
+        <div class="col-md-4">
+            <a href="{{ url_for('admin.notifications') }}" class="text-decoration-none">
+                <div class="feature-card h-100">
+                    <div class="feature-icon">🔔</div>
+                    <div class="feature-title">What's New?</div>
+                    <div>Notifications</div>
                 </div>
-            </div>
+            </a>
         </div>
-        
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <div class="card-body text-center">
-                    <h3 class="card-title">🗑️ Graveyard</h3>
-                    <p class="card-text">Restore deleted content</p>
-                    <a href="{{ url_for('admin.graveyard') }}" class="btn btn-primary">Recycle Bin</a>
+        <div class="col-md-4">
+            <a href="{{ url_for('admin.graveyard') }}" class="text-decoration-none">
+                <div class="feature-card h-100">
+                    <div class="feature-icon">🗑️</div>
+                    <div class="feature-title">Graveyard</div>
+                    <div>Recycle Bin</div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 </div>
