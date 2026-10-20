@@ -7,7 +7,7 @@ Everything is in one executed notebook: `Disaster_Tweets_Word2Vec_RNN_LSTM.ipynb
 
 ## Run it
 * **Google Colab (quickest):** upload the `.ipynb` to <https://colab.research.google.com> (or open it from GitHub) and choose *Runtime → Run all*.
-  About 8 minutes on the free CPU runtime. Nothing else to upload: `train.csv` is downloaded and validated automatically
+  Roughly 7–10 minutes on the free CPU runtime. Nothing else to upload: `train.csv` is downloaded and validated automatically
   (7,613 rows, 3,271 / 4,342 labels), falling back to an upload prompt.
 * **Locally:** `pip install -r requirements.txt`, then `jupyter nbconvert --to notebook --execute --inplace Disaster_Tweets_Word2Vec_RNN_LSTM.ipynb`
   (or open it in Jupyter). `data/train.csv` is included, so no internet is needed (only the optional GloVe experiment at the very end needs it;
