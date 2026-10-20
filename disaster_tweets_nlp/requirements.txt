@@ -1,0 +1,13 @@
+# Versions used for the executed notebook (Python 3.13). Any recent TF 2.16+/Keras 3 stack works; Colab needs nothing extra.
+tensorflow==2.21.0
+keras==3.15.1
+gensim==4.4.0
+scikit-learn==1.9.1
+pandas==3.0.5
+numpy==2.5.3
+scipy
+matplotlib
+seaborn
+jupyter
+nbconvert
+ipykernel
