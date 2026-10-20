@@ -8986,7 +8986,7 @@ the 2-D map is a rough shadow of the 100-d space; the cosine matrix on the right
 <li><strong>The strongest relationship: <em>killed – police</em></strong> (cosine 0.34, the highest of the 45 pairs). The two words co-occur in 13
 training tweets where only 1.4 would be expected by chance, but 7 of those 13 are near-copies of a single report about a police shooting in Richmond and 2 more
 are about one Tennessee theatre shooting, so the signal rests on about six distinct stories: "violent incidents involving police". On the plot both lie to the right
-(PC1 ≈ 1.9 and 3.2), although <em>fire</em> and <em>school</em> are just as far right, so position on PC1 alone is not distinctive. <em>flood – killed</em> (0.26) is anecdotal: its 4 co-occurrences are
+(PC1 ≈ 1.9 and 3.2), although <em>fire</em> (and, less so, <em>school</em>) is also far right, so position on PC1 alone is not distinctive. <em>flood – killed</em> (0.26) is anecdotal: its 4 co-occurrences are
 3 copies of one Kaduna flood report plus one other tweet.</li>
 <li><strong>The hazard words do not form a tight cluster.</strong> <em>fire, flood, earthquake, storm</em> are scattered across both components; the six pairs among them have cosines of only
 0.13–0.20, and the mean cosine <em>within</em> my hand-made groups (0.164) is barely above the mean <em>between</em> groups (0.152) – the groups are essentially not recovered.
@@ -10779,7 +10779,7 @@ P(disaster) for the two analysed tweets (true labels: error 1 = non-disaster, er
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><strong>Result.</strong></p>
 <ul>
-<li><strong>GloVe helps consistently, and not because of coverage.</strong> Mean F1 over the five extra seeds rises from 0.7132 ± 0.0310 (self-trained Word2Vec) to <strong>0.7648 ± 0.0084 with GloVe on the baseline vocabulary</strong> and 0.7735 ± 0.0058 with the extended
+<li><strong>GloVe helps consistently, and mostly not because of coverage.</strong> Mean F1 over the five extra seeds rises from 0.7132 ± 0.0310 (self-trained Word2Vec) to <strong>0.7648 ± 0.0084 with GloVe on the baseline vocabulary</strong> and 0.7735 ± 0.0058 with the extended
 vocabulary; both beat the baseline in 5 of 5 seeds. Mean accuracy rises from 0.7886 to 0.8062 and 0.8146. At seed 42 the recall goes 0.6865 → 0.7018 / 0.7171 and the F1 0.7534 → 0.7593 / 0.7771 (accuracy 0.8070 → 0.8089 / 0.8234).
 Since the baseline-vocabulary variant has <em>lower</em> token coverage than the main model yet keeps most of the gain, the improvement comes from the pre-trained vectors themselves.</li>
 <li><strong>FastText shows no gain that can be told apart from noise:</strong> mean F1 0.7295 ± 0.0348 (4 of 5 seeds above the baseline, but the difference is far smaller than the seed-to-seed spread), seed-42 F1 0.7502, McNemar p = 1.0. Coverage with vectors learned from the same small corpus is therefore not what helps –
