@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request
+from flask import Blueprint, current_app, render_template, redirect, url_for, flash, request
 from flask_login import login_required
 from admin_utils import admin_required
 from models.song import Song
@@ -10,7 +10,6 @@ from models.notification import Notification
 from forms.notification_form import NotificationForm
 import firebase_admin
 from firebase_admin import credentials, firestore
-import os
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
@@ -160,11 +159,12 @@ def delete_user(user_id):
     return redirect(url_for('admin.manage_users'))
 
 @admin_bp.route('/firebase-integration', methods=['GET', 'POST'])
+@login_required
+@admin_required
 def firebase_integration():
     # Initialize Firebase if not already
     if not firebase_admin._apps:
-        cred_path = os.path.join(os.getcwd(), 'firebase_key.json')
-        cred = credentials.Certificate(cred_path)
+        cred = credentials.Certificate(current_app.config['FIREBASE_KEY_PATH'])
         firebase_admin.initialize_app(cred)
     db_firestore = firestore.client()
 

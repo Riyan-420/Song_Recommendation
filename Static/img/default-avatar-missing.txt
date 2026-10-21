@@ -1,1 +1,0 @@
-Please add a default-avatar.jpg image in this directory for user profile defaults
